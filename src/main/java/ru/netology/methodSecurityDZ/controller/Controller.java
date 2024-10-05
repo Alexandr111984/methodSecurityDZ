@@ -64,7 +64,10 @@ public class Controller {
         return "Hello Admin";
     }
 
-   // Principal principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+    @GetMapping(value = "/Alexey")
+    public String currentUserName(Principal principal) {
+        return principal.getName();
+    }
+    
 
 }
