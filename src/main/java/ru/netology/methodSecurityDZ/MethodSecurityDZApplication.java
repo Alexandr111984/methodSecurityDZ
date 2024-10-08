@@ -1,9 +1,10 @@
 package ru.netology.methodSecurityDZ;
 
+
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.netology.methodSecurityDZ.entity.Persons;
 import ru.netology.methodSecurityDZ.repository.PersonsRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +26,13 @@ public class MethodSecurityDZApplication implements CommandLineRunner {
     private final PersonsRepository personsRepository;
 
 
-
     public static void main(String[] args) {
 
         SpringApplication.run(MethodSecurityDZApplication.class, args);
 
     }
+
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -40,6 +42,7 @@ public class MethodSecurityDZApplication implements CommandLineRunner {
         persons.setAge(13);
         persons.setPhone_number("8-913-666-88-99");
         persons.setCityOfLiving("Moscow");
+        persons.setPassword("123");
         System.out.println(persons);
         Persons persons1 = new Persons();
         persons1.setName("Alexey");
@@ -47,6 +50,7 @@ public class MethodSecurityDZApplication implements CommandLineRunner {
         persons1.setAge(23);
         persons1.setPhone_number("8-913-666-99-00");
         persons1.setCityOfLiving("Omsk");
+        persons1.setPassword("1234");
         System.out.println(persons1);
         Persons persons2 = new Persons();
         persons2.setName("Igor");
@@ -54,6 +58,7 @@ public class MethodSecurityDZApplication implements CommandLineRunner {
         persons2.setAge(29);
         persons2.setPhone_number("8-923-678-99-00");
         persons2.setCityOfLiving("Tomsk");
+        persons2.setPassword("12345");
         System.out.println(persons2);
         Persons persons3 = new Persons();
         persons3.setName("Ivan");
@@ -61,8 +66,8 @@ public class MethodSecurityDZApplication implements CommandLineRunner {
         persons3.setAge(33);
         persons3.setPhone_number("8-923-999-99-99");
         persons3.setCityOfLiving("Tomsk");
+        persons3.setPassword("12");
         System.out.println(persons3);
-
         personsRepository.save(persons);
         personsRepository.save(persons1);
         personsRepository.save(persons2);
@@ -70,4 +75,6 @@ public class MethodSecurityDZApplication implements CommandLineRunner {
 
 
     }
+
+
 }

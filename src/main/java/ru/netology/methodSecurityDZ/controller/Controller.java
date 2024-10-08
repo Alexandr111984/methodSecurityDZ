@@ -2,8 +2,9 @@ package ru.netology.methodSecurityDZ.controller;
 
 
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import ru.netology.methodSecurityDZ.entity.Persons;
 import ru.netology.methodSecurityDZ.service.PersonsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,23 @@ import java.util.Optional;
 @RestController
 public class Controller {
     @Autowired
-    private final PersonsService personsService;
+    public void setPersonsService(PersonsService personsService) {
+        this.personsService = personsService;
+    }
+
+    @Autowired
+    private PersonsService personsService;
+
 
     public Controller(PersonsService personsService) {
 
         this.personsService = personsService;
+    }
+
+    @GetMapping("/authenticated")
+    public String authenticatedPersons(Principal principal) {
+        Persons persons = personsService.findByName(principal.getName());
+        return "secured part of web service: " + persons.getName() + " " + persons.getSurname();
     }
 
 
@@ -64,10 +77,5 @@ public class Controller {
         return "Hello Admin";
     }
 
-    @GetMapping(value = "/Alexey")
-    public String currentUserName(Principal principal) {
-        return principal.getName();
-    }
-    
 
 }
