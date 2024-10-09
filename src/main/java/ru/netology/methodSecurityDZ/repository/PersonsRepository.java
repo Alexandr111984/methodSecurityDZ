@@ -23,7 +23,5 @@ public interface PersonsRepository extends JpaRepository<Persons, Integer> {
     @Query("select p from Persons p where p.age > :age")
     List<Persons> findByAgeLessThan(@Param("age") Integer age);
 
-
-    Persons findByName(String name);
 }
 

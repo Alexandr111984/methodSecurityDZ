@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface PersonsService extends UserDetailsService {
+public interface PersonsService  {
 
 
     List<Persons> getByCityOfLiving(String cityOfLiving);
@@ -22,9 +22,6 @@ public interface PersonsService extends UserDetailsService {
 
 
     Optional<Persons> getByNameAndSurname(String name, String surname);
-
-    Persons findByName(String name);
-
 
 }
 

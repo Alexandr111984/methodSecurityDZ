@@ -1,8 +1,10 @@
 package ru.netology.methodSecurityDZ.config;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -21,6 +23,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.netology.methodSecurityDZ.service.PersonsService;
 
+@Getter
 @Configuration
 @EnableWebSecurity
 
@@ -58,7 +61,8 @@ public class MethodSecurityConfig {
         http.sessionManagement(Customizer.withDefaults());
         http.formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
         http.anonymous(Customizer.withDefaults());
-        http.csrf(Customizer.withDefaults());
+        //noinspection removal
+        http.csrf().disable();
         return http.build();
     }
 
@@ -88,14 +92,6 @@ public class MethodSecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(personsService);
-        return authenticationProvider;
     }
 
 
