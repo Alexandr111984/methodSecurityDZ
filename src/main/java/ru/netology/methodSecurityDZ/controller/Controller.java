@@ -2,6 +2,7 @@ package ru.netology.methodSecurityDZ.controller;
 
 
 import jakarta.annotation.security.RolesAllowed;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.method.P;
@@ -14,16 +15,8 @@ import ru.netology.methodSecurityDZ.service.PersonsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 public class Controller {
-//    @Autowired
-//    public void setPersonsService(PersonsService personsService) {
-//        this.personsService = personsService;
-//    }
 
     @Autowired
     private PersonsService personsService;
@@ -36,8 +29,6 @@ public class Controller {
 
         this.personsService = personsService;
     }
-
-
 
 
 //    @GetMapping(value = "/persons/by-city_of_living")
@@ -80,13 +71,13 @@ public class Controller {
         return "Hello Admin";
     }
 
-    @GetMapping("/authentication")
+
+    @GetMapping("/authentication/by-username")
     @PreAuthorize("#username==authentication.principal.username")
-    public String greetingUser(String username){
+    public String greetingUser(@RequestParam("username") String username) {
+
         return "hello User " + username;
     }
-
-
 
 
 }

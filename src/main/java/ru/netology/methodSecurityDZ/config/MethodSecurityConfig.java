@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.SecurityBuilder;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,20 +41,11 @@ public class MethodSecurityConfig {
 //
 //    }
 
-    private PersonsService personsService;
-
-    @Autowired
-
-    public void setPersonsService(PersonsService personsService) {
-        this.personsService = personsService;
-    }
-
     @Bean
 
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                .anyRequest()
-                .authenticated());
+                .anyRequest().authenticated());
         http.headers(Customizer.withDefaults());
         http.sessionManagement(Customizer.withDefaults());
         http.formLogin(AbstractAuthenticationFilterConfigurer::permitAll);
@@ -77,7 +66,7 @@ public class MethodSecurityConfig {
                 .build());
         userDetailsManager.createUser(users.username("user")
                 .password("user")
-                .roles("WRITE")
+                .roles("READ")
                 .build());
         userDetailsManager.createUser(users.username("alex")
                 .password("alex")
